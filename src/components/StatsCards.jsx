@@ -1,66 +1,87 @@
-function StatCard({ label, value, accent, icon }) {
+import { FileText, Zap, MapPin, RefreshCw } from "lucide-react";
+
+function StatCard({
+  label,
+  value,
+  icon,
+  borderColor,
+  iconBg,
+  iconColor,
+  valueColor,
+}) {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 flex items-center gap-4">
-      <div className={`h-11 w-11 rounded-lg grid place-items-center shrink-0 ${accent.bg}`}>
-        <span className={accent.text}>{icon}</span>
+    <div
+      className={`bg-white border-l-4 ${borderColor} border-t border-r border-b border-slate-200 rounded-xl px-5 py-4 flex items-center gap-4 shadow-sm`}
+    >
+      <div
+        className={`h-11 w-11 rounded-lg grid place-items-center shrink-0 ${iconBg}`}
+      >
+        <span className={iconColor}>{icon}</span>
       </div>
       <div>
-        <p className="text-xs sm:text-sm text-slate-500 font-medium">{label}</p>
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tabular-nums">
-          {value}
-        </h2>
+        <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">
+          {label}
+        </p>
+        <p className={`text-2xl font-bold tabular-nums mt-0.5 ${valueColor}`}>
+          {value ?? "—"}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function StatCardSkeleton() {
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl px-5 py-4 flex items-center gap-4 shadow-sm animate-pulse">
+      <div className="h-11 w-11 rounded-lg bg-slate-100 shrink-0" />
+      <div className="space-y-2 flex-1">
+        <div className="h-3 bg-slate-100 rounded w-24" />
+        <div className="h-6 bg-slate-100 rounded w-16" />
       </div>
     </div>
   );
 }
 
 function StatsCards({ stats, loading }) {
-  const cards = [
-    {
-      label: "Total Tenders",
-      value: stats?.totalTenders ?? "—",
-      accent: { bg: "bg-blue-50", text: "text-blue-600" },
-      icon: (
-        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
-    },
-    {
-      label: "Active Tenders",
-      value: stats?.activeTenders ?? "—",
-      accent: { bg: "bg-green-50", text: "text-green-600" },
-      icon: (
-        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-    },
-    {
-      label: "States Covered",
-      value: stats?.totalStates ?? "—",
-      accent: { bg: "bg-orange-50", text: "text-orange-600" },
-      icon: (
-        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
-    },
-  ];
-
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="bg-white border border-slate-200 rounded-xl p-5 h-[76px] animate-pulse"
-          />
+        {[0, 1, 2].map((i) => (
+          <StatCardSkeleton key={i} />
         ))}
       </div>
     );
   }
+
+  const cards = [
+    {
+      label: "Total Tenders",
+      value: stats?.totalTenders?.toLocaleString("en-IN"),
+      icon: <FileText size={20} />,
+      borderColor: "border-l-blue-500",
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-600",
+      valueColor: "text-blue-700",
+    },
+    {
+      label: "Active Tenders",
+      value: stats?.activeTenders?.toLocaleString("en-IN"),
+      icon: <Zap size={20} />,
+      borderColor: "border-l-green-500",
+      iconBg: "bg-green-50",
+      iconColor: "text-green-600",
+      valueColor: "text-green-700",
+    },
+    {
+      label: "States Covered",
+      value: stats?.totalStates?.toLocaleString("en-IN"),
+      icon: <MapPin size={20} />,
+      borderColor: "border-l-orange-500",
+      iconBg: "bg-orange-50",
+      iconColor: "text-orange-600",
+      valueColor: "text-orange-700",
+    },
+  ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

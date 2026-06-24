@@ -5,10 +5,7 @@ import FilterSidebar from "../components/FilterSidebar";
 import Pagination from "../components/Pagination";
 import Loader from "../components/Loader";
 import StatsCards from "../components/StatsCards";
-
 import { getTenders, getStats } from "../api/tenderApi";
-
-const MAX_VALUE = 1000000000;
 
 function HomePage() {
   const [loading, setLoading] = useState(false);
@@ -27,8 +24,8 @@ function HomePage() {
     city: "",
     closingFrom: "",
     closingTo: "",
-    minValue: 0,
-    maxValue: MAX_VALUE,
+    minValue: "",
+    maxValue: "",
     sortBy: "latest",
   });
 
@@ -70,12 +67,15 @@ function HomePage() {
         sortBy: filters.sortBy,
       });
 
+      // ✅ IMPORTANT FIX: unwrap backend response
       setTenders(res.data || []);
       setTotalPages(res.pages || 1);
-      setTotalResults(res.total ?? res.data?.length ?? 0);
+      setTotalResults(res.total || 0);
     } catch (error) {
       console.error("Failed to load tenders:", error);
-      setError("Couldn't load tenders right now. Check your connection and try again.");
+      setError(
+        "Couldn't load tenders right now. Check your connection and try again.",
+      );
       setTenders([]);
     } finally {
       setLoading(false);
@@ -108,7 +108,9 @@ function HomePage() {
         <div className="lg:col-span-3">
           {!loading && !error && (
             <p className="text-sm text-slate-500 mb-4">
-              <span className="font-semibold text-slate-700 tabular-nums">{totalResults}</span>{" "}
+              <span className="font-semibold text-slate-700 tabular-nums">
+                {totalResults}
+              </span>{" "}
               tender{totalResults === 1 ? "" : "s"} found
             </p>
           )}

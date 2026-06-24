@@ -30,7 +30,11 @@ export const getUrgencyStatus = (closingDate) => {
   }
 
   if (days <= 3) {
-    return { label: `${days} day${days === 1 ? "" : "s"} left`, tone: "critical", days };
+    return {
+      label: `${days} day${days === 1 ? "" : "s"} left`,
+      tone: "critical",
+      days,
+    };
   }
 
   if (days <= 7) {

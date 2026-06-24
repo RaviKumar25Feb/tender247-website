@@ -2,7 +2,9 @@ function getPageNumbers(page, totalPages) {
   // Always show first, last, current, and one neighbor on each side.
   // Collapse the rest into ellipses.
   const pages = new Set([1, totalPages, page, page - 1, page + 1]);
-  const sorted = [...pages].filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+  const sorted = [...pages]
+    .filter((p) => p >= 1 && p <= totalPages)
+    .sort((a, b) => a - b);
 
   const result = [];
   let prev = 0;
@@ -33,8 +35,18 @@ function Pagination({ page, totalPages, onPageChange }) {
         className={`${baseBtn} border-slate-200 text-slate-600 hover:bg-slate-50`}
         aria-label="Previous page"
       >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
 
@@ -56,7 +68,7 @@ function Pagination({ page, totalPages, onPageChange }) {
           >
             {p}
           </button>
-        )
+        ),
       )}
 
       <button
@@ -65,8 +77,18 @@ function Pagination({ page, totalPages, onPageChange }) {
         className={`${baseBtn} border-slate-200 text-slate-600 hover:bg-slate-50`}
         aria-label="Next page"
       >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
     </nav>

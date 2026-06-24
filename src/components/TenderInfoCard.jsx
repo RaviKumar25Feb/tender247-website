@@ -8,7 +8,9 @@ function TenderInfoCard({ label, value, accent = false, icon }) {
       )}
       <div className="min-w-0">
         <p className="text-xs text-slate-500">{label}</p>
-        <p className={`font-medium break-words ${accent ? "text-green-600" : "text-slate-800"}`}>
+        <p
+          className={`font-medium break-words ${accent ? "text-green-600" : "text-slate-800"}`}
+        >
           {value || "—"}
         </p>
       </div>
