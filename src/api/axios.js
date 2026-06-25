@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "https://tender247-server.onrender.com/api",
   timeout: 15000,
 });
 
